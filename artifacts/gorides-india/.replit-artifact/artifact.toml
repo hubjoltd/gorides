@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "GoRides India"
+description = "A polished, mobile-friendly landing page for GoRides India, a Bengaluru travel service focused on airport transfers and outstation journeys, with a dual-channel enquiry form for email and WhatsApp."
+version = "1.0.0"
+id = "artifacts/gorides-india"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21729
+
+[services.development]
+run = "pnpm --filter @workspace/gorides-india run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gorides-india", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gorides-india/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21729"
+BASE_PATH = "/"

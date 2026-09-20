@@ -1,6 +1,6 @@
-# [Project name]
+# GoRides India
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A polished landing page for a Bengaluru travel service focused on airport transfers and outstation journeys, with Gmail and WhatsApp enquiry actions.
 
 ## Run & Operate
 
@@ -22,23 +22,32 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/gorides-india/src/App.tsx` — single-page landing page and enquiry flow
+- `artifacts/gorides-india/src/index.css` — theme tokens, typography, motion, and shared visual utilities
+- `artifacts/gorides-india/vite.config.ts` — Vite app configuration and artifact routing
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Presentation-first single-page app with no backend dependency.
+- Enquiry form validates client-side, then prepares the same enquiry text for Gmail compose and WhatsApp.
+- Phone number and email live as easy-to-edit constants near the top of `src/App.tsx`.
+- The page keeps the service offering intentionally focused on Outstation and Airport Services.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Responsive GoRides India marketing page for Bengaluru-based travel.
+- Two service paths: Outstation and Airport Services.
+- Route and vehicle prompts feed into the enquiry form.
+- Contact actions include phone, email, Gmail compose, WhatsApp, and a floating WhatsApp shortcut.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- The visual direction should stay classy, warm, mobile-friendly, and focused rather than adding unrelated services.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The email address and phone number are currently editable demo contact details; update them in `artifacts/gorides-india/src/App.tsx` before publishing.
+- Manual Vite builds require `PORT` and `BASE_PATH`; managed preview workflows provide them automatically.
 
 ## Pointers
 
