@@ -35,6 +35,7 @@ import {
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
+import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 99000 12345';
@@ -152,15 +153,12 @@ const fleetSlides = [
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
   return (
-    <a href="#top" data-testid="link-brand" className="focus-ring group inline-flex items-center gap-2">
-      <span className={`relative grid h-10 w-10 place-items-center rounded-[14px] ${inverse ? 'bg-[#f6bb4c] text-[#163943]' : 'bg-[#1c8061] text-[#f9f4e9]'}`}>
-        <span className="absolute inset-[5px] rounded-[10px] border border-current/35" />
-        <Navigation size={19} strokeWidth={2.4} className="relative -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
-      </span>
-      <span className="leading-none">
-        <span className={`block text-[17px] font-extrabold tracking-[-0.05em] ${inverse ? 'text-[#f7f1e5]' : 'text-[#173b44]'}`}>GoRides<span className={inverse ? 'text-[#f6bb4c]' : 'text-[#1c8061]'}>India</span></span>
-        <span className={`mt-1 block font-mono-ui text-[8px] uppercase tracking-[0.18em] ${inverse ? 'text-[#b8ccc7]' : 'text-[#6b7b78]'}`}>the good road home</span>
-      </span>
+    <a href="#top" data-testid="link-brand" className="focus-ring group inline-flex items-center">
+      <img
+        src={logoImage}
+        alt="GoRides India — Outstation Trips"
+        className={`h-12 w-[166px] rounded-[10px] object-cover object-center transition-transform duration-300 group-hover:scale-[1.02] sm:h-14 sm:w-[194px] ${inverse ? 'ring-1 ring-[#66d93f]/30' : 'shadow-[0_8px_18px_rgba(4,28,55,.12)]'}`}
+      />
     </a>
   );
 }
