@@ -35,6 +35,7 @@ import {
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
+import firstSlideImage from '@assets/IMG-20260911-WA0020_1789884518717.jpg';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 
 const queryClient = new QueryClient();
@@ -90,7 +91,7 @@ const fleetSlides = [
     detail: 'A smooth, quiet pick for airport days, city runs and easy weekend escapes.',
     finish: 'Pearl white + GoRides green',
     swatches: ['#f8f5ed', '#1c8061', '#173b44'],
-    image: referenceImage,
+    image: firstSlideImage,
     imagePosition: 'center 54%',
     tone: '#dfe9df',
   },
@@ -610,7 +611,7 @@ function Home() {
           <div className="flex flex-col justify-between gap-3 pt-6 text-[10px] text-[#88a9a0] sm:flex-row"><span>© 2025 GoRides India. Travel well.</span><span className="font-mono-ui tracking-[0.12em]">BENGALURU / INDIA</span></div>
         </div>
       </footer>
-      <a href={whatsappHref} target="_blank" rel="noreferrer" data-testid="link-floating-whatsapp" aria-label="Message GoRides on WhatsApp" className="focus-ring fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-[#f6bb4c] text-[#173b44] shadow-[0_10px_24px_rgba(19,45,53,.22)] transition-transform hover:scale-105"><MessageCircle size={23} /></a>
+      <a href={whatsappHref} target="_blank" rel="noreferrer" data-testid="link-floating-whatsapp" aria-label="Message GoRides on WhatsApp" className="whatsapp-blink focus-ring fixed bottom-5 right-5 z-30 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-full bg-[#f6bb4c] text-[#173b44] shadow-[0_10px_24px_rgba(19,45,53,.22)] transition-transform hover:scale-105 sm:w-auto sm:px-4"><MessageCircle size={23} /><span className="hidden text-[11px] font-extrabold sm:inline">WhatsApp us</span></a>
     </div>
   );
 }
