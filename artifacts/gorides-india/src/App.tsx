@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
+import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
 
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 99000 12345';
@@ -72,50 +73,79 @@ const popularRoutes = [
 ];
 
 const fleet = [
-  { name: 'Sedan', seats: '1–3 guests', detail: 'Quiet, comfortable, nimble', icon: CarFront },
-  { name: 'SUV', seats: '1–6 guests', detail: 'Room for people and plans', icon: Compass },
-  { name: 'Tempo Traveller', seats: '7–16 guests', detail: 'The whole group, together', icon: Users },
+  { name: 'Sedan', seats: '4 seater', detail: 'Elegant and easy for city rides, airport runs and small families.', icon: CarFront, swatches: ['#f8f5ed', '#1c8061', '#173b44'] },
+  { name: 'SUV', seats: '6 seater', detail: 'A little more space for luggage, people and long weekends.', icon: Compass, swatches: ['#f8f5ed', '#253940', '#cfd8d1'] },
+  { name: 'Innova', seats: '7 seater', detail: 'A comfortable family favourite for relaxed outstation travel.', icon: Users, swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'] },
+  { name: 'Tempo Traveller', seats: '10–17 seater', detail: 'Keep your group together with room to stretch out.', icon: Users, swatches: ['#f8f5ed', '#1c8061', '#173b44'] },
+  { name: 'Mini Bus', seats: '20–28 seater', detail: 'Dependable group travel for events, teams and celebrations.', icon: Users, swatches: ['#f8f5ed', '#253940', '#cfd8d1'] },
+  { name: 'Luxury Coach', seats: '35–40 seater', detail: 'Make the whole journey comfortable, from pickup to return.', icon: Users, swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'] },
 ];
 
 const fleetSlides = [
   {
-    name: 'Executive Sedan',
-    shortName: 'Sedan',
-    seats: '1–3 guests',
+    name: 'Sedan',
+    shortName: '4 Seater',
+    seats: '4 seater',
     detail: 'A smooth, quiet pick for airport days, city runs and easy weekend escapes.',
-    finish: 'Pearl white + deep teal',
-    swatches: ['#f8f5ed', '#173b44', '#f6bb4c'],
-    image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1400&q=85',
+    finish: 'Pearl white + GoRides green',
+    swatches: ['#f8f5ed', '#1c8061', '#173b44'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
     tone: '#dfe9df',
   },
   {
-    name: 'Comfort SUV',
-    shortName: 'SUV',
-    seats: '1–6 guests',
+    name: 'SUV',
+    shortName: '6 Seater',
+    seats: '6 seater',
     detail: 'Extra room for people, luggage and the unplanned stops that make a trip better.',
-    finish: 'Graphite + moss green',
-    swatches: ['#202d31', '#799c83', '#f0d4a1'],
-    image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1400&q=85',
+    finish: 'Pearl white + charcoal',
+    swatches: ['#f8f5ed', '#253940', '#cfd8d1'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
     tone: '#d9e3db',
   },
   {
-    name: 'Innova Crysta',
-    shortName: 'Premium MPV',
-    seats: '1–7 guests',
+    name: 'Innova',
+    shortName: '7 Seater',
+    seats: '7 seater',
     detail: 'Plenty of legroom and a calm cabin for families, teams and longer routes.',
-    finish: 'Champagne + forest green',
-    swatches: ['#d9c6a6', '#1f4c47', '#f7f1e5'],
-    image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1400&q=85',
+    finish: 'Pearl white + forest green',
+    swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
     tone: '#e6dfd2',
   },
   {
     name: 'Tempo Traveller',
-    shortName: 'Tempo',
-    seats: '7–16 guests',
+    shortName: '10–17 Seater',
+    seats: '10–17 seater',
     detail: 'Keep the whole group together with space for luggage, stories and plenty of chai stops.',
-    finish: 'Midnight navy + turmeric',
-    swatches: ['#132d3c', '#f6bb4c', '#c7d8d1'],
-    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1400&q=85',
+    finish: 'Pearl white + GoRides green',
+    swatches: ['#f8f5ed', '#1c8061', '#173b44'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
+    tone: '#dce4e2',
+  },
+  {
+    name: 'Mini Bus',
+    shortName: '20–28 Seater',
+    seats: '20–28 seater',
+    detail: 'Dependable group travel for events, teams and celebrations across Karnataka and beyond.',
+    finish: 'Pearl white + charcoal',
+    swatches: ['#f8f5ed', '#253940', '#cfd8d1'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
+    tone: '#e0e8e2',
+  },
+  {
+    name: 'Luxury Coach',
+    shortName: '35–40 Seater',
+    seats: '35–40 seater',
+    detail: 'Make the whole journey comfortable, from pickup to return, with a coach built for longer routes.',
+    finish: 'Pearl white + forest green',
+    swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'],
+    image: referenceImage,
+    imagePosition: 'center 54%',
     tone: '#dce4e2',
   },
 ];
@@ -344,6 +374,8 @@ function Home() {
             </div>
             <div className="mt-14 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
               <button type="button" data-testid="button-service-outstation" onClick={() => pickService('Outstation')} className="focus-ring group relative min-h-[370px] overflow-hidden rounded-[28px] bg-[#1a4e54] p-7 text-left transition-transform duration-500 hover:-translate-y-1 md:p-10">
+                <img src={referenceImage} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-screen transition duration-700 group-hover:scale-105 group-hover:opacity-30" style={{ objectPosition: 'center 14%' }} />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1a4e54]/90 via-[#1a4e54]/85 to-[#102f39]/90" />
                 <div className="absolute -right-20 -top-28 h-80 w-80 rounded-full border-[38px] border-[#37766d]/50 transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute bottom-[-80px] right-[-30px] h-64 w-[430px] -rotate-[17deg] rounded-[50%] border-t-[2px] border-[#8cc6ac]/60" />
                 <div className="relative z-10 flex h-full flex-col justify-between">
@@ -431,7 +463,7 @@ function Home() {
                 <div className="relative min-h-[360px] overflow-hidden p-7 md:min-h-[420px] md:p-10" style={{ background: `linear-gradient(145deg, ${selectedFleet.tone} 0%, #f4f0e6 76%)` }}>
                   <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full border-[34px] border-white/45" />
                   <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#173b44]/25 to-transparent" />
-                  <img src={selectedFleet.image} alt={`${selectedFleet.name} for GoRides India journeys`} className="absolute bottom-6 left-1/2 h-[215px] w-[92%] -translate-x-1/2 object-cover mix-blend-multiply opacity-75 md:h-[270px] md:w-[86%]" />
+                  <img src={selectedFleet.image} alt={`${selectedFleet.name} for GoRides India journeys`} className="absolute bottom-6 left-1/2 h-[215px] w-[92%] -translate-x-1/2 object-cover mix-blend-multiply opacity-75 md:h-[270px] md:w-[86%]" style={{ objectPosition: selectedFleet.imagePosition }} />
                   <div className="relative z-10 flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 rounded-full border border-[#173b44]/15 bg-white/35 px-3 py-2 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#173b44]"><CarFront size={13} /> Our fleet</span>
                     <span className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#52706f]">{String(fleetSlide + 1).padStart(2, '0')} / {String(fleetSlides.length).padStart(2, '0')}</span>
@@ -477,18 +509,21 @@ function Home() {
             </div>
             <div className="mt-16 grid gap-5 lg:grid-cols-[1fr_1.45fr]">
               <div className="rounded-[26px] bg-[#e7eee5] p-7 md:p-9">
-                <p className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Choose your room on the road</p>
-                <h3 className="mt-4 text-3xl leading-tight tracking-[-0.04em] text-[#173b44]">Right-sized rides<br /><span className="font-display italic text-[#1c8061]">for real plans.</span></h3>
+                <p className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Our fleet</p>
+                <h3 className="mt-4 text-3xl leading-tight tracking-[-0.04em] text-[#173b44]">Vehicles for every<br /><span className="font-display italic text-[#1c8061]">group size.</span></h3>
                 <p className="mt-5 max-w-[300px] text-sm leading-6 text-[#687873]">Solo, family, team or full wedding party — tell us who’s coming and we’ll make space.</p>
                 <a href="#enquire" data-testid="link-fleet-enquire" className="focus-ring mt-7 inline-flex items-center gap-2 text-[12px] font-extrabold text-[#173b44]">Find my vehicle <ArrowUpRight size={15} /></a>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
-                {fleet.map(({ name, seats, detail, icon: Icon }) => (
+                {fleet.map(({ name, seats, detail, icon: Icon, swatches }) => (
                   <button type="button" key={name} data-testid={`button-fleet-${name.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' })} className="focus-ring group rounded-[24px] border border-[#ddd7ca] bg-[#fbf7ee] p-5 text-left transition-all hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(19,45,53,.08)]">
                     <Icon size={28} strokeWidth={1.5} className="text-[#1c8061] transition-transform group-hover:scale-110" />
                     <span className="mt-8 block text-sm font-extrabold text-[#23454c]">{name}</span>
                     <span className="mt-2 block font-mono-ui text-[10px] text-[#1c8061]">{seats}</span>
                     <span className="mt-3 block text-[11px] leading-4 text-[#7a8580]">{detail}</span>
+                    <span className="mt-4 flex items-center gap-1.5" aria-label={`${name} colour combination`}>
+                      {swatches.map((swatch) => <span key={swatch} className="h-3 w-3 rounded-full border border-[#c9d0c8]" style={{ backgroundColor: swatch }} />)}
+                    </span>
                   </button>
                 ))}
               </div>
