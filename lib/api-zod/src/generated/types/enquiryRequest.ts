@@ -5,17 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
-
-export type EnquiryRequestService = typeof EnquiryRequestService[keyof typeof EnquiryRequestService];
-
-
-export const EnquiryRequestService = {
-  Outstation: 'Outstation',
-  Airport_Services: 'Airport Services',
-} as const;
+import type { EnquiryRequestService } from './enquiryRequestService';
 
 export interface EnquiryRequest {
   /**
@@ -45,16 +35,3 @@ export interface EnquiryRequest {
   /** @maxLength 1000 */
   notes?: string;
 }
-
-export type EnquiryResponseStatus = typeof EnquiryResponseStatus[keyof typeof EnquiryResponseStatus];
-
-
-export const EnquiryResponseStatus = {
-  accepted: 'accepted',
-} as const;
-
-export interface EnquiryResponse {
-  status: EnquiryResponseStatus;
-  whatsappUrl: string;
-}
-

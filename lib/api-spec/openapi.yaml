@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: enquiries
+    description: Customer enquiry delivery
 paths:
   /healthz:
     get:
@@ -24,6 +26,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /enquiries:
+    post:
+      operationId: createEnquiry
+      tags: [enquiries]
+      summary: Send a customer enquiry
+      description: Sends the enquiry to the configured Gmail inbox and returns a pre-filled WhatsApp link.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnquiryRequest"
+      responses:
+        "202":
+          description: Enquiry accepted for delivery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnquiryResponse"
+        "400":
+          description: Invalid enquiry
+        "503":
+          description: Email delivery is not configured or unavailable
 components:
   schemas:
     HealthStatus:
@@ -33,4 +58,60 @@ components:
           type: string
       required:
         - status
+    EnquiryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        phone:
+          type: string
+          minLength: 8
+          maxLength: 40
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        service:
+          type: string
+          enum:
+            - Outstation
+            - Airport Services
+        route:
+          type: string
+          minLength: 1
+          maxLength: 200
+        date:
+          type: string
+          maxLength: 40
+        passengers:
+          type: string
+          maxLength: 40
+        vehicle:
+          type: string
+          maxLength: 120
+        notes:
+          type: string
+          maxLength: 1000
+      required:
+        - name
+        - phone
+        - email
+        - service
+        - route
+        - passengers
+    EnquiryResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - accepted
+        whatsappUrl:
+          type: string
+          format: uri
+      required:
+        - status
+        - whatsappUrl
 

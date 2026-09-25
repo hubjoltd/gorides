@@ -21,3 +21,13 @@ timeoutMs = 20000
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+ENQUIRY_TO_EMAIL = "Goridesindia@gmail.com"
+SMTP_FROM = "Goridesindia@gmail.com"
+SMTP_HOST = "smtp.gmail.com"
+SMTP_PORT = "465"
+SMTP_USER = "Goridesindia@gmail.com"
+WHATSAPP_PHONE = "918217026324"

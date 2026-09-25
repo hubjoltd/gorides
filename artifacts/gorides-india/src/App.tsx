@@ -1,5 +1,6 @@
 import { type FormEvent, type ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useCreateEnquiry } from '@workspace/api-client-react';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -55,11 +56,13 @@ const ROUTER_BASE =
     ? ''
     : import.meta.env.BASE_URL.replace(/\/$/, '');
 
+type EnquiryService = 'Outstation' | 'Airport Services';
+
 type Enquiry = {
   name: string;
   phone: string;
   email: string;
-  service: string;
+  service: EnquiryService;
   route: string;
   date: string;
   passengers: string;
@@ -186,7 +189,9 @@ function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [enquiry, setEnquiry] = useState<Enquiry>(emptyEnquiry);
   const [errors, setErrors] = useState<Partial<Record<keyof Enquiry, string>>>({});
-  const [submitted, setSubmitted] = useState<Enquiry | null>(null);
+  const [deliveryMessage, setDeliveryMessage] = useState('');
+  const [deliveryError, setDeliveryError] = useState('');
+  const createEnquiry = useCreateEnquiry();
 
   const updateField = (field: keyof Enquiry, value: string) => {
     setEnquiry((current) => ({ ...current, [field]: value }));
@@ -198,7 +203,7 @@ function Home() {
     document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors: Partial<Record<keyof Enquiry, string>> = {};
     if (!enquiry.name.trim()) nextErrors.name = 'Tell us your name';
@@ -207,17 +212,26 @@ function Home() {
     if (!enquiry.route.trim()) nextErrors.route = 'Where are you headed?';
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
-    setSubmitted({ ...enquiry });
-    window.setTimeout(() => document.querySelector('#confirmation')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+    setDeliveryMessage('');
+    setDeliveryError('');
+
+    const whatsappWindow = window.open('about:blank', '_blank', 'noopener,noreferrer');
+
+    try {
+      const result = await createEnquiry.mutateAsync({ data: enquiry });
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.location.href = result.whatsappUrl;
+      } else {
+        window.location.href = result.whatsappUrl;
+      }
+      setDeliveryMessage('Your enquiry was emailed. WhatsApp is ready with the same details — press Send there.');
+    } catch {
+      whatsappWindow?.close();
+      setDeliveryError('We could not send the enquiry email. Please try again or call us directly.');
+    }
   };
 
-  const enquiryText = submitted
-    ? `Hello GoRides India, I’d like to enquire about ${submitted.service.toLowerCase()}.\n\nName: ${submitted.name}\nPhone: ${submitted.phone}\nEmail: ${submitted.email}\nRoute: Bengaluru to ${submitted.route}\nTravel date: ${submitted.date || 'Flexible'}\nTravellers: ${submitted.passengers}\nVehicle preference: ${submitted.vehicle || 'Help me choose'}\nNotes: ${submitted.notes || 'None'}`
-    : '';
-  const gmailHref = submitted
-    ? `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${encodeURIComponent(`GoRides enquiry — ${submitted.route}`)}&body=${encodeURIComponent(enquiryText)}`
-    : '#';
-  const whatsappHref = submitted ? `https://wa.me/${PHONE_LINK}?text=${encodeURIComponent(enquiryText)}` : `https://wa.me/${PHONE_LINK}`;
+  const whatsappHref = `https://wa.me/${PHONE_LINK}`;
 
   return (
     <div id="top" className="noise min-h-[100dvh] overflow-hidden bg-[#f7f3ea]">
@@ -526,8 +540,7 @@ function Home() {
               </div>
             </div>
             <div className="rounded-[28px] bg-[#fbf7ee] p-5 shadow-[0_20px_60px_rgba(5,33,40,.2)] md:p-8">
-              {!submitted ? (
-                <form onSubmit={handleSubmit} noValidate data-testid="form-enquiry">
+              <form onSubmit={handleSubmit} noValidate data-testid="form-enquiry">
                   <div className="mb-7 flex items-center justify-between border-b border-[#ded8ca] pb-5">
                     <div><p className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Quick enquiry</p><h3 className="mt-2 text-2xl font-extrabold tracking-[-0.04em] text-[#173b44]">Tell us the shape of your trip.</h3></div>
                     <Sparkles className="hidden text-[#e9a536] sm:block" size={25} />
@@ -543,22 +556,11 @@ function Home() {
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Preferred vehicle</span><span className="relative block"><select data-testid="select-vehicle" value={enquiry.vehicle} onChange={(event) => updateField('vehicle', event.target.value)} className="focus-ring h-12 w-full appearance-none rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 pr-10 text-sm text-[#173b44]"><option value="">Help me choose</option>{fleetVehicles.map((vehicle) => <option key={vehicle.name} value={vehicle.name}>{vehicle.name} · {vehicle.type}</option>)}</select><ChevronDown className="pointer-events-none absolute right-4 top-4 text-[#1c8061]" size={16} /></span></label>
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Anything we should know? <span className="font-normal text-[#9aa39e]">(optional)</span></span><input data-testid="input-notes" value={enquiry.notes} onChange={(event) => updateField('notes', event.target.value)} placeholder="Flight number, extra stop, special request..." className="focus-ring h-12 w-full rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 text-sm text-[#173b44] placeholder:text-[#9aa39e]" /></label>
                   </div>
-                  <button type="submit" data-testid="button-submit-enquiry" className="focus-ring mt-7 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#1c8061] px-5 py-4 text-[12px] font-extrabold text-[#f8f2e5] shadow-[0_12px_24px_rgba(28,128,97,.2)] transition-all hover:-translate-y-0.5 hover:bg-[#246f58]">Create my enquiry <ArrowUpRight size={16} /></button>
-                  <p className="mt-4 text-center text-[10px] leading-4 text-[#8b948f]">No backend form here — we’ll prepare your message so you can send it by Gmail or WhatsApp.</p>
+                  <button type="submit" disabled={createEnquiry.isPending} data-testid="button-submit-enquiry" className="focus-ring mt-7 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#1c8061] px-5 py-4 text-[12px] font-extrabold text-[#f8f2e5] shadow-[0_12px_24px_rgba(28,128,97,.2)] transition-all hover:-translate-y-0.5 hover:bg-[#246f58] disabled:cursor-wait disabled:opacity-70">{createEnquiry.isPending ? 'Sending your enquiry…' : 'Send my enquiry'} <ArrowUpRight size={16} /></button>
+                  {deliveryMessage && <p role="status" className="mt-4 rounded-[13px] bg-[#dceee0] px-4 py-3 text-center text-[11px] leading-5 text-[#246f58]">{deliveryMessage}</p>}
+                  {deliveryError && <p role="alert" className="mt-4 rounded-[13px] bg-[#f7ded8] px-4 py-3 text-center text-[11px] leading-5 text-[#9e3c32]">{deliveryError}</p>}
+                  <p className="mt-4 text-center text-[10px] leading-4 text-[#8b948f]">We’ll email your enquiry automatically and open WhatsApp with the same details.</p>
                 </form>
-              ) : (
-                <div id="confirmation" data-testid="status-enquiry-confirmation" className="py-5">
-                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#dceee0] text-[#1c8061]"><Check size={28} strokeWidth={2.5} /></div>
-                  <p className="mt-7 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Your trip sketch is ready</p>
-                  <h3 className="mt-3 text-3xl leading-tight tracking-[-0.05em] text-[#173b44]">Thanks, {submitted.name.split(' ')[0] || 'there'}.</h3>
-                  <p className="mt-4 max-w-[480px] text-sm leading-6 text-[#687873]">We’ve shaped your enquiry for {submitted.service.toLowerCase()} from Bengaluru to {submitted.route}, with {submitted.vehicle ? `a ${submitted.vehicle} preference` : 'no vehicle preference yet'}. Choose where you’d like to send it — we’ll take it from there.</p>
-                  <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                    <a href={gmailHref} target="_blank" rel="noreferrer" data-testid="link-send-gmail" className="focus-ring flex items-center justify-center gap-2 rounded-full bg-[#1c8061] px-4 py-3 text-[12px] font-extrabold text-[#f8f2e5] transition-colors hover:bg-[#246f58]"><Mail size={16} /> Open Gmail draft</a>
-                    <a href={whatsappHref} target="_blank" rel="noreferrer" data-testid="link-send-whatsapp" className="focus-ring flex items-center justify-center gap-2 rounded-full bg-[#e0f0e0] px-4 py-3 text-[12px] font-extrabold text-[#1c8061] transition-colors hover:bg-[#cce6d0]"><MessageCircle size={16} /> Send on WhatsApp</a>
-                  </div>
-                  <button type="button" data-testid="button-reset-enquiry" onClick={() => { setSubmitted(null); setEnquiry(emptyEnquiry); }} className="focus-ring mt-6 inline-flex items-center gap-2 text-[11px] font-bold text-[#687873] underline decoration-[#f6bb4c] decoration-2 underline-offset-4">Start another enquiry <ArrowUpRight size={14} /></button>
-                </div>
-              )}
             </div>
           </div>
         </section>
