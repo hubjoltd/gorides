@@ -7,7 +7,9 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   BadgeCheck,
+  BusFront,
   CalendarDays,
+  CarFront,
   Check,
   ChevronDown,
   Clock3,
@@ -37,6 +39,12 @@ import mysuruImage from '@assets/Mysuru_1790325032336.jpg';
 import coorgImage from '@assets/Coorg_1790325032362.jpg';
 import airportImage from '@assets/IMG_20260925_140717_1790325492645.png';
 import outstationImage from '@assets/IMG_20260925_140705_1790325492691.png';
+import sedanImage from '@assets/4_seater_1790327115431.png';
+import suvImage from '@assets/6_seater_1790327115500.png';
+import mpvImage from '@assets/7_seater_1790327115532.png';
+import tempoImage from '@assets/17_seater_1790327115565.png';
+import minibusImage from '@assets/35_seater_1790327115603.png';
+import coachImage from '@assets/46_seater_1790327115633.png';
 
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 82170 26324';
@@ -51,6 +59,7 @@ type Enquiry = {
   route: string;
   date: string;
   passengers: string;
+  vehicle: string;
   notes: string;
 };
 
@@ -62,6 +71,7 @@ const emptyEnquiry: Enquiry = {
   route: '',
   date: '',
   passengers: '1–3 people',
+  vehicle: '',
   notes: '',
 };
 
@@ -72,6 +82,23 @@ const popularRoutes = [
   { city: 'Ooty', distance: '270 km', detail: 'Roads that climb into the clouds', image: ootyImage },
   { city: 'Chikmagalur', distance: '245 km', detail: 'Mist, estates, long lunches', image: chikmagalurImage },
   { city: 'Goa', distance: '590 km', detail: 'A holiday that starts at pickup', image: goaImage },
+];
+
+const fleetVehicles: Array<{
+  seats: string;
+  name: string;
+  type: string;
+  examples: string;
+  group: string;
+  image: string | null;
+  icon: typeof CarFront;
+}> = [
+  { seats: '04', name: '4 Seater', type: 'Sedan', examples: 'Dzire, Etios or similar', group: '1–3 people', image: sedanImage, icon: CarFront },
+  { seats: '06', name: '6 Seater', type: 'Spacious SUV', examples: 'Innova Crysta or similar', group: '4–6 people', image: suvImage, icon: CarFront },
+  { seats: '07', name: '7 Seater', type: 'Premium MPV', examples: 'Innova, Ertiga or similar', group: '7–16 people', image: mpvImage, icon: CarFront },
+  { seats: '17', name: '17 Seater', type: 'Tempo Traveller', examples: 'Room for the whole crew', group: '17+ people', image: tempoImage, icon: BusFront },
+  { seats: '35', name: '35 Seater', type: 'Group Bus', examples: 'For bigger group journeys', group: '17+ people', image: minibusImage, icon: BusFront },
+  { seats: '46', name: '46 Seater', type: 'Luxury Coach', examples: 'Comfort for the long road', group: '17+ people', image: coachImage, icon: BusFront },
 ];
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
@@ -181,7 +208,7 @@ function Home() {
   };
 
   const enquiryText = submitted
-    ? `Hello GoRides India, I’d like to enquire about ${submitted.service.toLowerCase()}.\n\nName: ${submitted.name}\nPhone: ${submitted.phone}\nEmail: ${submitted.email}\nRoute: Bengaluru to ${submitted.route}\nTravel date: ${submitted.date || 'Flexible'}\nTravellers: ${submitted.passengers}\nNotes: ${submitted.notes || 'None'}`
+    ? `Hello GoRides India, I’d like to enquire about ${submitted.service.toLowerCase()}.\n\nName: ${submitted.name}\nPhone: ${submitted.phone}\nEmail: ${submitted.email}\nRoute: Bengaluru to ${submitted.route}\nTravel date: ${submitted.date || 'Flexible'}\nTravellers: ${submitted.passengers}\nVehicle preference: ${submitted.vehicle || 'Help me choose'}\nNotes: ${submitted.notes || 'None'}`
     : '';
   const gmailHref = submitted
     ? `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${encodeURIComponent(`GoRides enquiry — ${submitted.route}`)}&body=${encodeURIComponent(enquiryText)}`
@@ -195,6 +222,7 @@ function Home() {
           <Logo />
           <nav className="hidden items-center gap-8 rounded-full border border-[#d5d4c9]/70 bg-[#f9f5eb]/70 px-6 py-3 backdrop-blur-sm lg:flex" aria-label="Primary navigation">
             <a href="#services" data-testid="link-nav-services" className="focus-ring text-[11px] font-bold text-[#51706d] transition-colors hover:text-[#1c8061]">Services</a>
+            <a href="#fleet" data-testid="link-nav-fleet" className="focus-ring text-[11px] font-bold text-[#51706d] transition-colors hover:text-[#1c8061]">Our fleet</a>
             <a href="#routes" data-testid="link-nav-routes" className="focus-ring text-[11px] font-bold text-[#51706d] transition-colors hover:text-[#1c8061]">Routes</a>
             <a href="#why-us" data-testid="link-nav-why" className="focus-ring text-[11px] font-bold text-[#51706d] transition-colors hover:text-[#1c8061]">Why GoRides</a>
             <a href="#enquire" data-testid="link-nav-enquire" className="focus-ring text-[11px] font-bold text-[#51706d] transition-colors hover:text-[#1c8061]">Contact</a>
@@ -211,7 +239,7 @@ function Home() {
         </div>
         {menuOpen && (
           <nav className="mx-5 rounded-[22px] border border-[#d8d3c6] bg-[#fbf7ee] p-3 shadow-[0_18px_40px_rgba(19,45,53,.12)] lg:hidden" aria-label="Mobile navigation">
-            {['services', 'routes', 'why-us', 'enquire'].map((item) => (
+            {['services', 'fleet', 'routes', 'why-us', 'enquire'].map((item) => (
               <a key={item} href={`#${item}`} data-testid={`link-mobile-${item}`} onClick={() => setMenuOpen(false)} className="focus-ring block rounded-[14px] px-4 py-3 text-sm font-bold capitalize text-[#23454c] hover:bg-[#e8eee6]">{item.replace('-', ' ')}</a>
             ))}
             <a href={`tel:${PHONE_LINK}`} data-testid="link-mobile-phone" onClick={() => setMenuOpen(false)} className="mt-2 flex items-center gap-2 border-t border-[#ded8ca] px-4 pt-4 text-sm font-bold text-[#1c8061]"><Phone size={15} /> {PHONE_DISPLAY}</a>
@@ -334,6 +362,74 @@ function Home() {
           </div>
         </section>
 
+        <section id="fleet" className="scroll-mt-8 bg-[#eee9de] px-5 py-20 md:px-8 md:py-28">
+          <div className="mx-auto max-w-[1240px]">
+            <div className="grid items-end gap-6 md:grid-cols-[1fr_auto] md:gap-10">
+              <div>
+                <SectionLabel>Our fleet</SectionLabel>
+                <h2 className="max-w-[650px] text-[clamp(2.7rem,5vw,4.8rem)] leading-[.92] tracking-[-0.06em] text-[#173b44]">
+                  Vehicles for every<br /><span className="font-display italic text-[#1c8061]">group size.</span>
+                </h2>
+              </div>
+              <p className="max-w-[360px] pb-1 text-sm leading-6 text-[#687873]">
+                A quick family trip or a full group tour — there’s a comfortable way to bring everyone along.
+              </p>
+            </div>
+
+            <div className="mt-11 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:mt-14 lg:grid-cols-6">
+              {fleetVehicles.map(({ seats, name, type, examples, group, image, icon: VehicleIcon }, index) => (
+                <article
+                  key={name}
+                  className="fleet-card group relative flex min-w-0 flex-col overflow-hidden rounded-[19px] border border-[#d6d4c9] bg-[#f8fbf8] shadow-[0_8px_22px_rgba(19,45,53,.045)] transition duration-500 hover:-translate-y-1.5 hover:border-[#a8c2aa] hover:shadow-[0_18px_34px_rgba(19,45,53,.12)]"
+                  style={{ animationDelay: `${index * 90}ms` }}
+                >
+                  <div className="fleet-image-stage relative mx-2 mt-2 flex h-[132px] items-center justify-center overflow-hidden rounded-[14px] sm:h-[150px] lg:h-[146px]">
+                    <span className="fleet-seat-mark absolute right-3 top-2 font-display text-[42px] leading-none text-[#173b44]/[.07]" aria-hidden="true">
+                      {seats}
+                    </span>
+                    {image ? (
+                      <img src={image} alt={`${name} vehicle option`} className="fleet-vehicle-photo relative z-10 h-full w-full object-contain mix-blend-multiply transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.04]" />
+                    ) : (
+                      <VehicleIcon
+                        className="fleet-vehicle-icon relative z-10 h-[58px] w-[72px] text-[#173b44]/75 transition duration-500 group-hover:-translate-y-1 group-hover:scale-110 group-hover:text-[#1c8061] sm:h-[66px] sm:w-[82px]"
+                        strokeWidth={1.15}
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className="absolute bottom-4 left-1/2 h-2 w-3/5 -translate-x-1/2 rounded-[50%] bg-[#173b44]/[.08] blur-sm transition duration-500 group-hover:w-1/2" aria-hidden="true" />
+                    <span className="fleet-orbit absolute -bottom-12 -right-8 h-28 w-28 rounded-full border border-[#1c8061]/[.11] transition-transform duration-700 group-hover:scale-125" aria-hidden="true" />
+                  </div>
+
+                  <div className="flex flex-1 flex-col px-3 pb-3 pt-3.5 sm:px-4 sm:pb-4">
+                    <span className="mb-1.5 inline-flex w-fit rounded-full bg-[#e6efeb] px-2 py-1 font-mono-ui text-[8px] uppercase tracking-[0.09em] text-[#1c8061] sm:text-[9px]">
+                      {seats} seats
+                    </span>
+                    <h3 className="text-[14px] font-extrabold tracking-[-0.035em] text-[#173b44] sm:text-[16px]">{name}</h3>
+                    <p className="mt-1 text-[10px] font-semibold leading-4 text-[#687873] sm:text-[11px]">{type}</p>
+                    <p className="mt-1 min-h-8 text-[9px] leading-4 text-[#87928c] sm:text-[10px]">{examples}</p>
+                    <button
+                      type="button"
+                      data-testid={`button-fleet-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                      onClick={() => {
+                        updateField('passengers', group);
+                        updateField('vehicle', name);
+                        document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="focus-ring mt-auto inline-flex items-center justify-between gap-1 border-t border-[#e0e4dc] pt-3 text-left text-[9px] font-extrabold text-[#173b44] transition-colors hover:text-[#1c8061] sm:text-[10px]"
+                    >
+                      <span>Enquire about this</span>
+                      <ArrowUpRight size={13} className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-[11px] leading-5 text-[#74817b]">
+              Not sure what suits your trip? <a href="#enquire" className="focus-ring font-extrabold text-[#1c8061] underline decoration-[#b7f21d] decoration-2 underline-offset-4">Tell us about your group</a> and we’ll help you choose.
+            </p>
+          </div>
+        </section>
+
         <section id="why-us" className="scroll-mt-8 bg-[#173b44] px-5 py-24 text-[#f8f2e5] md:px-8 md:py-32">
           <div className="mx-auto grid max-w-[1240px] gap-14 lg:grid-cols-[.85fr_1.15fr] lg:gap-24">
             <div>
@@ -440,6 +536,7 @@ function Home() {
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Route / destination</span><input data-testid="input-route" value={enquiry.route} onChange={(event) => updateField('route', event.target.value)} placeholder="Bengaluru to ..." className="focus-ring h-12 w-full rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 text-sm text-[#173b44] placeholder:text-[#9aa39e]" />{errors.route && <span className="mt-1 block text-[10px] text-[#b84b3d]">{errors.route}</span>}</label>
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Travel date <span className="font-normal text-[#9aa39e]">(optional)</span></span><span className="relative block"><input data-testid="input-date" type="date" value={enquiry.date} onChange={(event) => updateField('date', event.target.value)} className="focus-ring h-12 w-full rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 text-sm text-[#173b44]" /><CalendarDays className="pointer-events-none absolute right-4 top-4 text-[#1c8061]" size={16} /></span></label>
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Travellers</span><span className="relative block"><select data-testid="select-passengers" value={enquiry.passengers} onChange={(event) => updateField('passengers', event.target.value)} className="focus-ring h-12 w-full appearance-none rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 pr-10 text-sm text-[#173b44]"><option>1–3 people</option><option>4–6 people</option><option>7–16 people</option><option>17+ people</option></select><ChevronDown className="pointer-events-none absolute right-4 top-4 text-[#1c8061]" size={16} /></span></label>
+                    <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Preferred vehicle</span><span className="relative block"><select data-testid="select-vehicle" value={enquiry.vehicle} onChange={(event) => updateField('vehicle', event.target.value)} className="focus-ring h-12 w-full appearance-none rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 pr-10 text-sm text-[#173b44]"><option value="">Help me choose</option>{fleetVehicles.map((vehicle) => <option key={vehicle.name} value={vehicle.name}>{vehicle.name} · {vehicle.type}</option>)}</select><ChevronDown className="pointer-events-none absolute right-4 top-4 text-[#1c8061]" size={16} /></span></label>
                     <label className="block"><span className="mb-2 block text-[11px] font-extrabold text-[#526766]">Anything we should know? <span className="font-normal text-[#9aa39e]">(optional)</span></span><input data-testid="input-notes" value={enquiry.notes} onChange={(event) => updateField('notes', event.target.value)} placeholder="Flight number, extra stop, special request..." className="focus-ring h-12 w-full rounded-[13px] border border-[#d8d3c6] bg-[#f8f3e9] px-4 text-sm text-[#173b44] placeholder:text-[#9aa39e]" /></label>
                   </div>
                   <button type="submit" data-testid="button-submit-enquiry" className="focus-ring mt-7 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#1c8061] px-5 py-4 text-[12px] font-extrabold text-[#f8f2e5] shadow-[0_12px_24px_rgba(28,128,97,.2)] transition-all hover:-translate-y-0.5 hover:bg-[#246f58]">Create my enquiry <ArrowUpRight size={16} /></button>
@@ -450,7 +547,7 @@ function Home() {
                   <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#dceee0] text-[#1c8061]"><Check size={28} strokeWidth={2.5} /></div>
                   <p className="mt-7 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Your trip sketch is ready</p>
                   <h3 className="mt-3 text-3xl leading-tight tracking-[-0.05em] text-[#173b44]">Thanks, {submitted.name.split(' ')[0] || 'there'}.</h3>
-                  <p className="mt-4 max-w-[480px] text-sm leading-6 text-[#687873]">We’ve shaped your enquiry for {submitted.service.toLowerCase()} from Bengaluru to {submitted.route}. Choose where you’d like to send it — we’ll take it from there.</p>
+                  <p className="mt-4 max-w-[480px] text-sm leading-6 text-[#687873]">We’ve shaped your enquiry for {submitted.service.toLowerCase()} from Bengaluru to {submitted.route}, with {submitted.vehicle ? `a ${submitted.vehicle} preference` : 'no vehicle preference yet'}. Choose where you’d like to send it — we’ll take it from there.</p>
                   <div className="mt-7 grid gap-3 sm:grid-cols-2">
                     <a href={gmailHref} target="_blank" rel="noreferrer" data-testid="link-send-gmail" className="focus-ring flex items-center justify-center gap-2 rounded-full bg-[#1c8061] px-4 py-3 text-[12px] font-extrabold text-[#f8f2e5] transition-colors hover:bg-[#246f58]"><Mail size={16} /> Open Gmail draft</a>
                     <a href={whatsappHref} target="_blank" rel="noreferrer" data-testid="link-send-whatsapp" className="focus-ring flex items-center justify-center gap-2 rounded-full bg-[#e0f0e0] px-4 py-3 text-[12px] font-extrabold text-[#1c8061] transition-colors hover:bg-[#cce6d0]"><MessageCircle size={16} /> Send on WhatsApp</a>
@@ -468,7 +565,7 @@ function Home() {
           <div className="flex flex-col justify-between gap-8 border-b border-[#496563] pb-9 md:flex-row md:items-end">
             <div><Logo inverse /><p className="mt-5 max-w-[270px] text-[12px] leading-5 text-[#9ebcb3]">Airport days, outstation stories and the road in between. Bengaluru-based, India-bound.</p></div>
             <div className="flex flex-wrap gap-x-7 gap-y-3 text-[11px] font-bold text-[#c5d7d0]">
-              <a href="#services" data-testid="link-footer-services" className="focus-ring hover:text-[#f6bb4c]">Services</a><a href="#routes" data-testid="link-footer-routes" className="focus-ring hover:text-[#f6bb4c]">Routes</a><a href="#why-us" data-testid="link-footer-why" className="focus-ring hover:text-[#f6bb4c]">Why GoRides</a><a href="#enquire" data-testid="link-footer-contact" className="focus-ring hover:text-[#f6bb4c]">Contact</a>
+              <a href="#services" data-testid="link-footer-services" className="focus-ring hover:text-[#f6bb4c]">Services</a><a href="#fleet" data-testid="link-footer-fleet" className="focus-ring hover:text-[#f6bb4c]">Our fleet</a><a href="#routes" data-testid="link-footer-routes" className="focus-ring hover:text-[#f6bb4c]">Routes</a><a href="#why-us" data-testid="link-footer-why" className="focus-ring hover:text-[#f6bb4c]">Why GoRides</a><a href="#enquire" data-testid="link-footer-contact" className="focus-ring hover:text-[#f6bb4c]">Contact</a>
               <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=eeioubv" target="_blank" rel="noreferrer" data-testid="link-footer-instagram" aria-label="GoRides India on Instagram" className="focus-ring inline-flex items-center gap-1.5 hover:text-[#f6bb4c]"><Instagram size={13} /> Instagram</a>
               <a href="https://share.google/sQzCSCORYqydjOlAH" target="_blank" rel="noreferrer" data-testid="link-footer-google" aria-label="GoRides India on Google" className="focus-ring inline-flex items-center gap-1.5 hover:text-[#f6bb4c]"><MapPin size={13} /> Google</a>
             </div>

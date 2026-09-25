@@ -183,6 +183,31 @@
   animation: whatsapp-pulse 1.9s ease-in-out infinite;
 }
 
+@keyframes fleet-card-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.fleet-card {
+  animation: fleet-card-in 680ms both cubic-bezier(.2, .8, .2, 1);
+}
+
+.fleet-image-stage {
+  background:
+    radial-gradient(ellipse at 50% 65%, rgba(102, 217, 63, .10), transparent 48%),
+    linear-gradient(145deg, #edf4ee 0%, #e4efeb 100%);
+}
+
+.fleet-vehicle-icon {
+  filter: drop-shadow(0 8px 8px rgba(6, 40, 74, .10));
+}
+
+.fleet-vehicle-photo {
+  filter: drop-shadow(0 10px 10px rgba(6, 40, 74, .10));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-blink { animation: none; }
+  .fleet-card { animation: none; transition: none; }
+  .fleet-card * { transition-duration: 0.01ms !important; }
 }
