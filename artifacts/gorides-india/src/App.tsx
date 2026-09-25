@@ -13,6 +13,7 @@ import {
   Clock3,
   Headphones,
   IndianRupee,
+  Instagram,
   Mail,
   MapPin,
   Menu,
@@ -30,8 +31,8 @@ import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 
 const queryClient = new QueryClient();
-const PHONE_DISPLAY = '+91 99000 12345';
-const PHONE_LINK = '919900012345';
+const PHONE_DISPLAY = '+91 82170 26324';
+const PHONE_LINK = '918217026324';
 const EMAIL = 'hello@goridesindia.in';
 
 type Enquiry = {
@@ -430,6 +431,8 @@ function Home() {
             <div><Logo inverse /><p className="mt-5 max-w-[270px] text-[12px] leading-5 text-[#9ebcb3]">Airport days, outstation stories and the road in between. Bengaluru-based, India-bound.</p></div>
             <div className="flex flex-wrap gap-x-7 gap-y-3 text-[11px] font-bold text-[#c5d7d0]">
               <a href="#services" data-testid="link-footer-services" className="focus-ring hover:text-[#f6bb4c]">Services</a><a href="#routes" data-testid="link-footer-routes" className="focus-ring hover:text-[#f6bb4c]">Routes</a><a href="#why-us" data-testid="link-footer-why" className="focus-ring hover:text-[#f6bb4c]">Why GoRides</a><a href="#enquire" data-testid="link-footer-contact" className="focus-ring hover:text-[#f6bb4c]">Contact</a>
+              <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=eeioubv" target="_blank" rel="noreferrer" data-testid="link-footer-instagram" aria-label="GoRides India on Instagram" className="focus-ring inline-flex items-center gap-1.5 hover:text-[#f6bb4c]"><Instagram size={13} /> Instagram</a>
+              <a href="https://share.google/sQzCSCORYqydjOlAH" target="_blank" rel="noreferrer" data-testid="link-footer-google" aria-label="GoRides India on Google" className="focus-ring inline-flex items-center gap-1.5 hover:text-[#f6bb4c]"><MapPin size={13} /> Google</a>
             </div>
           </div>
           <div className="flex flex-col justify-between gap-3 pt-6 text-[10px] text-[#88a9a0] sm:flex-row"><span>© 2025 GoRides India. Travel well.</span><span className="font-mono-ui tracking-[0.12em]">BENGALURU / INDIA</span></div>
