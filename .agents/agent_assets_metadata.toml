@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "tHau72k80iVa4Ibajrevr"
+uri = "file://gorides-india-cpanel.zip"
+type = "unspecified"
+title = "GoRides India cPanel package"
+description = "Production static build for cPanel. Upload the ZIP contents into public_html or the folder for your domain/subdomain."
+logical_id = "483e5b24-4593-49c6-92e4-3f8f716df0f8"
+content_hash = "sha256:77d83b2bebd3dd69c4a149cc33f4486a6b8b97b082d4b9b9ca39bbfcf79de21b"
+size = 6274197
+mtime_ms = 1790336402642
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:2e64eb0f-8d8a-41a8-a3ed-f52c1e8ce2a0/483e5b24-4593-49c6-92e4-3f8f716df0f8/f235d817-a95e-4b88-9f57-421b8ae43fac"
+storage_version_token = "1790336413302425"
+content_type = "application/octet-stream"
