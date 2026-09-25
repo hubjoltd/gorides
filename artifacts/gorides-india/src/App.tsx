@@ -27,7 +27,6 @@ import {
 } from 'lucide-react';
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
 import sliderBackground from '@assets/132d4583-83ce-450e-827e-1966b44775e7_1790325260070.png';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 import goaImage from '@assets/Goa_1790325032169.jpg';
@@ -36,6 +35,8 @@ import ootyImage from '@assets/Ooty_1790325032280.jpg';
 import chikmagalurImage from '@assets/Chikmagalur_1790325032310.jpg';
 import mysuruImage from '@assets/Mysuru_1790325032336.jpg';
 import coorgImage from '@assets/Coorg_1790325032362.jpg';
+import airportImage from '@assets/IMG_20260925_140717_1790325492645.png';
+import outstationImage from '@assets/IMG_20260925_140705_1790325492691.png';
 
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 82170 26324';
@@ -220,13 +221,13 @@ function Home() {
 
       <main>
         <section
-          className="relative isolate overflow-hidden bg-[#f7f3ea] bg-cover bg-center px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44"
+          className="relative isolate flex min-h-[700px] items-center overflow-hidden bg-[#f7f3ea] bg-cover bg-center px-5 pb-16 pt-32 md:min-h-[760px] md:px-8 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44"
           style={{ backgroundImage: `url(${sliderBackground})`, backgroundPosition: 'center 54%' }}
         >
           <div className="absolute inset-0" aria-hidden="true" style={{ background: 'linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.9) 38%, rgba(247,243,234,.5) 70%, rgba(247,243,234,.16) 100%), linear-gradient(0deg, rgba(247,243,234,.55), rgba(247,243,234,.12))' }} />
           <div className="absolute -right-44 top-20 h-[480px] w-[480px] rounded-full bg-[#e4ede2] blur-3xl" />
-          <div className="mx-auto grid min-w-0 max-w-[1240px] items-center gap-14 lg:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] lg:gap-20">
-            <div className="relative z-10 min-w-0">
+          <div className="relative z-10 mx-auto w-full max-w-[1240px]">
+            <div className="min-w-0 max-w-[680px]">
               <div className="reveal inline-flex items-center gap-2 rounded-full border border-[#ccd9cd] bg-[#eef4eb] px-3 py-2 font-mono-ui text-[10px] uppercase tracking-[0.15em] text-[#1c8061]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#f0a936]" /> Bengaluru’s thoughtful travel partner
               </div>
@@ -244,13 +245,6 @@ function Home() {
                 <div className="flex items-center gap-2 text-[11px] font-bold text-[#526766]"><ShieldCheck size={16} className="text-[#1c8061]" /> Trained drivers</div>
                 <div className="flex items-center gap-2 text-[11px] font-bold text-[#526766]"><Clock3 size={16} className="text-[#1c8061]" /> Always on time</div>
                 <div className="flex items-center gap-2 text-[11px] font-bold text-[#526766]"><IndianRupee size={16} className="text-[#1c8061]" /> Clear quotes</div>
-              </div>
-            </div>
-            <div className="relative z-10 min-w-0 lg:justify-self-stretch">
-              <HeroRouteSketch />
-              <div className="absolute -bottom-5 -left-4 flex max-w-[190px] items-center gap-3 rounded-[18px] border border-[#d8d3c6] bg-[#fbf7ee] p-3 shadow-[0_15px_35px_rgba(19,45,53,.13)] sm:-left-8">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#e9efe7] text-[#1c8061]"><BadgeCheck size={19} /></span>
-                <span className="text-[10px] font-bold leading-4 text-[#23454c]">The same friendly face, from booking to drop-off.</span>
               </div>
             </div>
           </div>
@@ -273,6 +267,24 @@ function Home() {
           </div>
         </section>
 
+        <section id="route-planner" className="scroll-mt-8 bg-[#173b44] px-5 py-20 text-[#f8f2e5] md:px-8 md:py-28">
+          <div className="mx-auto grid max-w-[1240px] items-center gap-12 lg:grid-cols-[.78fr_1.22fr] lg:gap-24">
+            <div>
+              <SectionLabel light>A route worth taking</SectionLabel>
+              <h2 className="max-w-[480px] text-[clamp(2.8rem,5vw,5rem)] leading-[.91] tracking-[-0.06em]">Bengaluru <span className="font-display italic text-[#f6bb4c]">→</span><br />somewhere lovely.</h2>
+              <p className="mt-7 max-w-[390px] text-sm leading-7 text-[#b7cfca]">Your trip starts with a simple conversation. Tell us where you want to go, and we’ll shape the road around your time.</p>
+              <a href="#enquire" data-testid="link-route-planner-enquire" className="focus-ring mt-8 inline-flex items-center gap-2 border-b border-[#f6bb4c] pb-2 text-[12px] font-bold text-[#f6bb4c] transition-colors hover:text-[#ffdb89]">Plan this journey <ArrowUpRight size={15} /></a>
+            </div>
+            <div className="relative">
+              <HeroRouteSketch />
+              <div className="absolute -bottom-5 -left-4 flex max-w-[190px] items-center gap-3 rounded-[18px] border border-[#d8d3c6] bg-[#fbf7ee] p-3 shadow-[0_15px_35px_rgba(19,45,53,.13)] sm:-left-8">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#e9efe7] text-[#1c8061]"><BadgeCheck size={19} /></span>
+                <span className="text-[10px] font-bold leading-4 text-[#23454c]">The same friendly face, from booking to drop-off.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="services" className="scroll-mt-8 bg-[#f7f3ea] px-5 py-24 md:px-8 md:py-32">
           <div className="mx-auto max-w-[1240px]">
             <div className="grid items-end gap-8 md:grid-cols-[1fr_auto]">
@@ -284,7 +296,7 @@ function Home() {
             </div>
             <div className="mt-14 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
               <button type="button" data-testid="button-service-outstation" onClick={() => pickService('Outstation')} className="focus-ring group relative min-h-[370px] overflow-hidden rounded-[28px] bg-[#1a4e54] p-7 text-left transition-transform duration-500 hover:-translate-y-1 md:p-10">
-                <img src={referenceImage} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-screen transition duration-700 group-hover:scale-105 group-hover:opacity-30" style={{ objectPosition: 'center 14%' }} />
+                 <img src={outstationImage} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-35 mix-blend-screen transition duration-700 group-hover:scale-105 group-hover:opacity-45" style={{ objectPosition: 'center 54%' }} />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#1a4e54]/90 via-[#1a4e54]/85 to-[#102f39]/90" />
                 <div className="absolute -right-20 -top-28 h-80 w-80 rounded-full border-[38px] border-[#37766d]/50 transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute bottom-[-80px] right-[-30px] h-64 w-[430px] -rotate-[17deg] rounded-[50%] border-t-[2px] border-[#8cc6ac]/60" />
@@ -301,6 +313,8 @@ function Home() {
                 </div>
               </button>
               <button type="button" data-testid="button-service-airport" onClick={() => pickService('Airport Services')} className="focus-ring group relative min-h-[370px] overflow-hidden rounded-[28px] border border-[#d8d3c6] bg-[#eee9de] p-7 text-left transition-transform duration-500 hover:-translate-y-1 md:p-10">
+                 <img src={airportImage} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-700 group-hover:scale-105 group-hover:opacity-65" style={{ objectPosition: 'center 48%' }} />
+                 <div className="absolute inset-0 bg-gradient-to-br from-[#f7f3ea]/90 via-[#eee9de]/60 to-[#dce9e2]/75" />
                 <div className="absolute -right-8 top-10 h-52 w-52 rounded-full border border-[#b3c5b6] opacity-70" />
                 <div className="absolute -right-2 top-16 h-40 w-40 rounded-full border border-[#b3c5b6] opacity-45" />
                 <div className="absolute bottom-8 right-9 text-[#1c8061]/80"><Plane size={108} strokeWidth={.7} className="-rotate-12 transition-transform duration-500 group-hover:rotate-0" /></div>
