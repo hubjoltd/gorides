@@ -28,6 +28,7 @@ import {
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
+import sliderBackground from '@assets/132d4583-83ce-450e-827e-1966b44775e7_1790324736364.png';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 
 const queryClient = new QueryClient();
@@ -105,8 +106,13 @@ function SectionLabel({ children, light = false }: { children: ReactNode; light?
 function HeroRouteSketch() {
   return (
     <div className="relative mx-auto h-[390px] w-full max-w-[530px] overflow-hidden rounded-[32px] border border-[#5e8a85]/35 bg-[#18444c] shadow-[0_30px_75px_rgba(13,47,56,.3)] md:h-[440px]">
-      <div className="absolute inset-0 opacity-75" style={{ background: 'radial-gradient(circle at 65% 20%, rgba(105,167,143,.36), transparent 30%), linear-gradient(150deg, #275d60 0%, #173d48 42%, #122d3c 100%)' }} />
-      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(28deg, transparent 42%, rgba(255,255,255,.12) 42.2%, transparent 42.4%), linear-gradient(155deg, transparent 63%, rgba(255,255,255,.1) 63.2%, transparent 63.4%)', backgroundSize: '65px 65px, 90px 90px' }} />
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        aria-hidden="true"
+        style={{ backgroundImage: `url(${sliderBackground})`, backgroundPosition: 'center 58%' }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(150deg,rgba(4,40,74,.2)_0%,rgba(4,40,74,.46)_52%,rgba(4,27,50,.82)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(28deg,transparent_42%,rgba(255,255,255,.12)_42.2%,transparent_42.4%),linear-gradient(155deg,transparent_63%,rgba(255,255,255,.1)_63.2%,transparent_63.4%)] opacity-30 [background-size:65px_65px,90px_90px]" />
       <div className="absolute left-7 top-7 flex items-center gap-2 font-mono-ui text-[9px] uppercase tracking-[0.18em] text-[#c8e4d9]">
         <span className="h-2 w-2 rounded-full bg-[#f6bb4c] shadow-[0_0_0_5px_rgba(246,187,76,.14)]" /> Bengaluru, Karnataka
       </div>
@@ -209,8 +215,8 @@ function Home() {
       <main>
         <section className="relative bg-[#f7f3ea] px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44">
           <div className="absolute -right-44 top-20 h-[480px] w-[480px] rounded-full bg-[#e4ede2] blur-3xl" />
-          <div className="mx-auto grid max-w-[1240px] items-center gap-14 lg:grid-cols-[.92fr_1.08fr] lg:gap-20">
-            <div className="relative z-10">
+          <div className="mx-auto grid min-w-0 max-w-[1240px] items-center gap-14 lg:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] lg:gap-20">
+            <div className="relative z-10 min-w-0">
               <div className="reveal inline-flex items-center gap-2 rounded-full border border-[#ccd9cd] bg-[#eef4eb] px-3 py-2 font-mono-ui text-[10px] uppercase tracking-[0.15em] text-[#1c8061]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#f0a936]" /> Bengaluru’s thoughtful travel partner
               </div>
@@ -230,7 +236,7 @@ function Home() {
                 <div className="flex items-center gap-2 text-[11px] font-bold text-[#526766]"><IndianRupee size={16} className="text-[#1c8061]" /> Clear quotes</div>
               </div>
             </div>
-            <div className="relative z-10 lg:justify-self-end">
+            <div className="relative z-10 min-w-0 lg:justify-self-stretch">
               <HeroRouteSketch />
               <div className="absolute -bottom-5 -left-4 flex max-w-[190px] items-center gap-3 rounded-[18px] border border-[#d8d3c6] bg-[#fbf7ee] p-3 shadow-[0_15px_35px_rgba(19,45,53,.13)] sm:-left-8">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#e9efe7] text-[#1c8061]"><BadgeCheck size={19} /></span>
