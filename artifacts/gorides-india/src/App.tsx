@@ -1,41 +1,32 @@
-import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
+import { type FormEvent, type ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import {
   ArrowDownRight,
-  ArrowLeft,
-  ArrowRight,
   ArrowUpRight,
   BadgeCheck,
   CalendarDays,
-  CarFront,
   Check,
   ChevronDown,
   Clock3,
-  Compass,
   Headphones,
   IndianRupee,
-  Luggage,
   Mail,
   MapPin,
   Menu,
   MessageCircle,
-  Navigation,
   Phone,
-  Palette,
   Plane,
   Route,
   ShieldCheck,
   Sparkles,
-  Users,
   X,
 } from 'lucide-react';
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
-import firstSlideImage from '@assets/IMG-20260911-WA0020_1789884518717.jpg';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 
 const queryClient = new QueryClient();
@@ -72,84 +63,6 @@ const popularRoutes = [
   { city: 'Ooty', distance: '270 km', detail: 'Roads that climb into the clouds' },
   { city: 'Chikmagalur', distance: '245 km', detail: 'Mist, estates, long lunches' },
   { city: 'Goa', distance: '590 km', detail: 'A holiday that starts at pickup' },
-];
-
-const fleet = [
-  { name: 'Sedan', seats: '4 seater', detail: 'Elegant and easy for city rides, airport runs and small families.', icon: CarFront, swatches: ['#f8f5ed', '#1c8061', '#173b44'] },
-  { name: 'SUV', seats: '6 seater', detail: 'A little more space for luggage, people and long weekends.', icon: Compass, swatches: ['#f8f5ed', '#253940', '#cfd8d1'] },
-  { name: 'Innova', seats: '7 seater', detail: 'A comfortable family favourite for relaxed outstation travel.', icon: Users, swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'] },
-  { name: 'Tempo Traveller', seats: '10–17 seater', detail: 'Keep your group together with room to stretch out.', icon: Users, swatches: ['#f8f5ed', '#1c8061', '#173b44'] },
-  { name: 'Mini Bus', seats: '20–28 seater', detail: 'Dependable group travel for events, teams and celebrations.', icon: Users, swatches: ['#f8f5ed', '#253940', '#cfd8d1'] },
-  { name: 'Luxury Coach', seats: '35–40 seater', detail: 'Make the whole journey comfortable, from pickup to return.', icon: Users, swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'] },
-];
-
-const fleetSlides = [
-  {
-    name: 'Sedan',
-    shortName: '4 Seater',
-    seats: '4 seater',
-    detail: 'A smooth, quiet pick for airport days, city runs and easy weekend escapes.',
-    finish: 'Pearl white + GoRides green',
-    swatches: ['#f8f5ed', '#1c8061', '#173b44'],
-    image: firstSlideImage,
-    imagePosition: 'center 54%',
-    tone: '#dfe9df',
-  },
-  {
-    name: 'SUV',
-    shortName: '6 Seater',
-    seats: '6 seater',
-    detail: 'Extra room for people, luggage and the unplanned stops that make a trip better.',
-    finish: 'Pearl white + charcoal',
-    swatches: ['#f8f5ed', '#253940', '#cfd8d1'],
-    image: referenceImage,
-    imagePosition: 'center 54%',
-    tone: '#d9e3db',
-  },
-  {
-    name: 'Innova',
-    shortName: '7 Seater',
-    seats: '7 seater',
-    detail: 'Plenty of legroom and a calm cabin for families, teams and longer routes.',
-    finish: 'Pearl white + forest green',
-    swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'],
-    image: referenceImage,
-    imagePosition: 'center 54%',
-    tone: '#e6dfd2',
-  },
-  {
-    name: 'Tempo Traveller',
-    shortName: '10–17 Seater',
-    seats: '10–17 seater',
-    detail: 'Keep the whole group together with space for luggage, stories and plenty of chai stops.',
-    finish: 'Pearl white + GoRides green',
-    swatches: ['#f8f5ed', '#1c8061', '#173b44'],
-    image: referenceImage,
-    imagePosition: 'center 54%',
-    tone: '#dce4e2',
-  },
-  {
-    name: 'Mini Bus',
-    shortName: '20–28 Seater',
-    seats: '20–28 seater',
-    detail: 'Dependable group travel for events, teams and celebrations across Karnataka and beyond.',
-    finish: 'Pearl white + charcoal',
-    swatches: ['#f8f5ed', '#253940', '#cfd8d1'],
-    image: referenceImage,
-    imagePosition: 'center 54%',
-    tone: '#e0e8e2',
-  },
-  {
-    name: 'Luxury Coach',
-    shortName: '35–40 Seater',
-    seats: '35–40 seater',
-    detail: 'Make the whole journey comfortable, from pickup to return, with a coach built for longer routes.',
-    finish: 'Pearl white + forest green',
-    swatches: ['#f8f5ed', '#1f4c47', '#f6bb4c'],
-    image: referenceImage,
-    imagePosition: 'center 54%',
-    tone: '#dce4e2',
-  },
 ];
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
@@ -226,7 +139,6 @@ function HeroRouteSketch() {
 
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [fleetSlide, setFleetSlide] = useState(0);
   const [enquiry, setEnquiry] = useState<Enquiry>(emptyEnquiry);
   const [errors, setErrors] = useState<Partial<Record<keyof Enquiry, string>>>({});
   const [submitted, setSubmitted] = useState<Enquiry | null>(null);
@@ -238,24 +150,6 @@ function Home() {
 
   const pickService = (service: string) => {
     updateField('service', service);
-    document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const selectedFleet = fleetSlides[fleetSlide];
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setFleetSlide((current) => (current + 1) % fleetSlides.length);
-    }, 6500);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const moveFleetSlide = (direction: 1 | -1) => {
-    setFleetSlide((current) => (current + direction + fleetSlides.length) % fleetSlides.length);
-  };
-
-  const pickVehicle = () => {
-    updateField('notes', `Preferred vehicle: ${selectedFleet.name} — ${selectedFleet.finish}.`);
     document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -456,76 +350,6 @@ function Home() {
                   <span className="text-right"><span className="block font-mono-ui text-[10px] text-[#8a9691]">{route.distance}</span><ArrowUpRight size={16} className="ml-auto mt-4 text-[#1c8061] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
                 </button>
               ))}
-            </div>
-            <div className="mt-16 overflow-hidden rounded-[30px] border border-[#cbd6cb] bg-[#173b44] shadow-[0_22px_55px_rgba(19,59,68,.12)]">
-              <div className="grid lg:grid-cols-[1.08fr_.92fr]">
-                <div className="relative min-h-[360px] overflow-hidden p-7 md:min-h-[420px] md:p-10" style={{ background: `linear-gradient(145deg, ${selectedFleet.tone} 0%, #f4f0e6 76%)` }}>
-                  <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full border-[34px] border-white/45" />
-                  <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#173b44]/25 to-transparent" />
-                  <img src={selectedFleet.image} alt={`${selectedFleet.name} for GoRides India journeys`} className="absolute bottom-6 left-1/2 h-[215px] w-[92%] -translate-x-1/2 object-cover mix-blend-multiply opacity-75 md:h-[270px] md:w-[86%]" style={{ objectPosition: selectedFleet.imagePosition }} />
-                  <div className="relative z-10 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-[#173b44]/15 bg-white/35 px-3 py-2 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#173b44]"><CarFront size={13} /> Our fleet</span>
-                    <span className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#52706f]">{String(fleetSlide + 1).padStart(2, '0')} / {String(fleetSlides.length).padStart(2, '0')}</span>
-                  </div>
-                  <div className="absolute bottom-8 left-7 z-10 md:left-10">
-                    <p className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Right-sized for the road</p>
-                    <h3 className="mt-2 max-w-[430px] text-[clamp(2.1rem,4vw,4rem)] leading-[.9] tracking-[-0.055em] text-[#173b44]">{selectedFleet.name}</h3>
-                  </div>
-                </div>
-                <div className="flex min-h-[360px] flex-col justify-between bg-[#173b44] p-7 text-[#f8f2e5] md:min-h-[420px] md:p-10">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#a9d4c5]"><Palette size={14} /> Choose your finish</div>
-                      <span className="rounded-full bg-[#28545a] px-3 py-1.5 font-mono-ui text-[10px] text-[#c4dfd1]">{selectedFleet.seats}</span>
-                    </div>
-                    <p className="mt-7 max-w-[360px] text-[15px] leading-7 text-[#c3d8d0]">{selectedFleet.detail}</p>
-                    <div className="mt-7 border-t border-[#52706f] pt-5">
-                      <p className="text-[11px] font-bold text-[#f8f2e5]">{selectedFleet.finish}</p>
-                      <div className="mt-3 flex items-center gap-2">
-                        {selectedFleet.swatches.map((swatch, index) => (
-                          <span key={swatch} className={`h-7 w-7 rounded-full border-2 ${index === 0 ? 'border-[#f6bb4c]' : 'border-[#a9d4c5]/40'}`} style={{ backgroundColor: swatch }} aria-label={`Vehicle colour ${index + 1}`} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-                    <button type="button" onClick={pickVehicle} data-testid="button-choose-vehicle" className="focus-ring inline-flex items-center gap-3 rounded-full bg-[#f6bb4c] px-5 py-3 text-[12px] font-extrabold text-[#173b44] transition-all hover:-translate-y-0.5 hover:bg-[#ffd274]">Choose this ride <ArrowUpRight size={15} /></button>
-                    <div className="flex items-center gap-2">
-                      <button type="button" onClick={() => moveFleetSlide(-1)} data-testid="button-fleet-previous" aria-label="Previous vehicle" className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-[#77958d] text-[#d8e7df] transition-colors hover:border-[#f6bb4c] hover:text-[#f6bb4c]"><ArrowLeft size={16} /></button>
-                      <button type="button" onClick={() => moveFleetSlide(1)} data-testid="button-fleet-next" aria-label="Next vehicle" className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-[#77958d] text-[#d8e7df] transition-colors hover:border-[#f6bb4c] hover:text-[#f6bb4c]"><ArrowRight size={16} /></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 border-t border-[#52706f] bg-[#102f39] p-4 md:px-7">
-                {fleetSlides.map((slide, index) => (
-                  <button type="button" key={slide.name} onClick={() => setFleetSlide(index)} data-testid={`button-fleet-slide-${index + 1}`} aria-label={`Show ${slide.name}`} className={`focus-ring flex items-center gap-2 rounded-full px-3 py-2 text-left text-[10px] font-bold transition-colors ${index === fleetSlide ? 'bg-[#f6bb4c] text-[#173b44]' : 'text-[#c3d8d0] hover:bg-[#28545a]'}`}>
-                    <span className="font-mono-ui text-[9px]">{String(index + 1).padStart(2, '0')}</span>
-                    {slide.shortName}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="mt-16 grid gap-5 lg:grid-cols-[1fr_1.45fr]">
-              <div className="rounded-[26px] bg-[#e7eee5] p-7 md:p-9">
-                <p className="font-mono-ui text-[10px] uppercase tracking-[0.16em] text-[#1c8061]">Our fleet</p>
-                <h3 className="mt-4 text-3xl leading-tight tracking-[-0.04em] text-[#173b44]">Vehicles for every<br /><span className="font-display italic text-[#1c8061]">group size.</span></h3>
-                <p className="mt-5 max-w-[300px] text-sm leading-6 text-[#687873]">Solo, family, team or full wedding party — tell us who’s coming and we’ll make space.</p>
-                <a href="#enquire" data-testid="link-fleet-enquire" className="focus-ring mt-7 inline-flex items-center gap-2 text-[12px] font-extrabold text-[#173b44]">Find my vehicle <ArrowUpRight size={15} /></a>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {fleet.map(({ name, seats, detail, icon: Icon, swatches }) => (
-                  <button type="button" key={name} data-testid={`button-fleet-${name.toLowerCase().replace(/\s+/g, '-')}`} onClick={() => document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' })} className="focus-ring group rounded-[24px] border border-[#ddd7ca] bg-[#fbf7ee] p-5 text-left transition-all hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(19,45,53,.08)]">
-                    <Icon size={28} strokeWidth={1.5} className="text-[#1c8061] transition-transform group-hover:scale-110" />
-                    <span className="mt-8 block text-sm font-extrabold text-[#23454c]">{name}</span>
-                    <span className="mt-2 block font-mono-ui text-[10px] text-[#1c8061]">{seats}</span>
-                    <span className="mt-3 block text-[11px] leading-4 text-[#7a8580]">{detail}</span>
-                    <span className="mt-4 flex items-center gap-1.5" aria-label={`${name} colour combination`}>
-                      {swatches.map((swatch) => <span key={swatch} className="h-3 w-3 rounded-full border border-[#c9d0c8]" style={{ backgroundColor: swatch }} />)}
-                    </span>
-                  </button>
-                ))}
-              </div>
             </div>
           </div>
         </section>
