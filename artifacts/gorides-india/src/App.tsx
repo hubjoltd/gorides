@@ -473,7 +473,13 @@ function Home() {
               <a href="https://share.google/sQzCSCORYqydjOlAH" target="_blank" rel="noreferrer" data-testid="link-footer-google" aria-label="GoRides India on Google" className="focus-ring inline-flex items-center gap-1.5 hover:text-[#f6bb4c]"><MapPin size={13} /> Google</a>
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-3 pt-6 text-[10px] text-[#88a9a0] sm:flex-row"><span>© 2025 GoRides India. Travel well.</span><span className="font-mono-ui tracking-[0.12em]">BENGALURU / INDIA</span></div>
+          <div className="flex flex-col justify-between gap-3 pt-6 text-[10px] text-[#88a9a0] sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5">
+              <span>© 2025 GoRides India. Travel well.</span>
+              <span className="inline-flex items-start gap-1.5 leading-4"><MapPin size={12} className="mt-0.5 shrink-0 text-[#f6bb4c]" /> 927, New Friends Colony, S T Bed Layout, Koramangala, Bengaluru, Karnataka 560047</span>
+            </div>
+            <span className="font-mono-ui tracking-[0.12em]">BENGALURU / INDIA</span>
+          </div>
         </div>
       </footer>
       <a href={whatsappHref} target="_blank" rel="noreferrer" data-testid="link-floating-whatsapp" aria-label="Message GoRides on WhatsApp" className="whatsapp-blink focus-ring fixed bottom-5 right-5 z-30 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-full bg-[#f6bb4c] text-[#173b44] shadow-[0_10px_24px_rgba(19,45,53,.22)] transition-transform hover:scale-105 sm:w-auto sm:px-4"><MessageCircle size={23} /><span className="hidden text-[11px] font-extrabold sm:inline">WhatsApp us</span></a>
