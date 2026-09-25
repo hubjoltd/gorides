@@ -30,6 +30,12 @@ import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } fro
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
 import sliderBackground from '@assets/132d4583-83ce-450e-827e-1966b44775e7_1790324736364.png';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
+import goaImage from '@assets/Goa_1790325032169.jpg';
+import hampiImage from '@assets/Hampi_1790325032248.jpg';
+import ootyImage from '@assets/Ooty_1790325032280.jpg';
+import chikmagalurImage from '@assets/Chikmagalur_1790325032310.jpg';
+import mysuruImage from '@assets/Mysuru_1790325032336.jpg';
+import coorgImage from '@assets/Coorg_1790325032362.jpg';
 
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 82170 26324';
@@ -59,12 +65,12 @@ const emptyEnquiry: Enquiry = {
 };
 
 const popularRoutes = [
-  { city: 'Mysuru', distance: '145 km', detail: 'Palaces, food, an easy weekend' },
-  { city: 'Coorg', distance: '265 km', detail: 'Coffee country, unhurried' },
-  { city: 'Hampi', distance: '340 km', detail: 'History under wide skies' },
-  { city: 'Ooty', distance: '270 km', detail: 'Roads that climb into the clouds' },
-  { city: 'Chikmagalur', distance: '245 km', detail: 'Mist, estates, long lunches' },
-  { city: 'Goa', distance: '590 km', detail: 'A holiday that starts at pickup' },
+  { city: 'Mysuru', distance: '145 km', detail: 'Palaces, food, an easy weekend', image: mysuruImage },
+  { city: 'Coorg', distance: '265 km', detail: 'Coffee country, unhurried', image: coorgImage },
+  { city: 'Hampi', distance: '340 km', detail: 'History under wide skies', image: hampiImage },
+  { city: 'Ooty', distance: '270 km', detail: 'Roads that climb into the clouds', image: ootyImage },
+  { city: 'Chikmagalur', distance: '245 km', detail: 'Mist, estates, long lunches', image: chikmagalurImage },
+  { city: 'Goa', distance: '590 km', detail: 'A holiday that starts at pickup', image: goaImage },
 ];
 
 function Logo({ inverse = false }: { inverse?: boolean }) {
@@ -349,13 +355,21 @@ function Home() {
             </div>
             <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {popularRoutes.map((route, index) => (
-                <button type="button" key={route.city} data-testid={`button-route-${route.city.toLowerCase()}`} onClick={() => { updateField('route', route.city); document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' }); }} className="focus-ring group flex items-center justify-between rounded-[20px] border border-[#ddd7ca] bg-[#fbf7ee] p-5 text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#99bca8] hover:shadow-[0_12px_28px_rgba(19,45,53,.08)]">
-                  <span className="flex items-center gap-4">
-                    <span className="font-mono-ui text-[10px] text-[#1c8061]">0{index + 1}</span>
-                    <span><span className="block text-base font-extrabold text-[#23454c]">{route.city}</span><span className="mt-1 block text-[11px] text-[#7a8580]">{route.detail}</span></span>
-                  </span>
-                  <span className="text-right"><span className="block font-mono-ui text-[10px] text-[#8a9691]">{route.distance}</span><ArrowUpRight size={16} className="ml-auto mt-4 text-[#1c8061] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
-                </button>
+                  <button type="button" key={route.city} data-testid={`button-route-${route.city.toLowerCase()}`} onClick={() => { updateField('route', route.city); document.querySelector('#enquire')?.scrollIntoView({ behavior: 'smooth' }); }} className="focus-ring group relative min-h-[230px] overflow-hidden rounded-[20px] border border-[#ddd7ca] bg-[#173b44] text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#99bca8] hover:shadow-[0_12px_28px_rgba(19,45,53,.16)]">
+                    <img src={route.image} alt={`${route.city} destination`} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06284a]/95 via-[#06284a]/35 to-[#06284a]/5" />
+                    <span className="absolute left-5 top-5 font-mono-ui text-[10px] text-[#f0f7e8]">0{index + 1}</span>
+                    <span className="absolute right-5 top-5 rounded-full border border-white/35 bg-[#06284a]/25 px-2.5 py-1 font-mono-ui text-[10px] text-[#f0f7e8] backdrop-blur-sm">{route.distance}</span>
+                    <span className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
+                      <span>
+                        <span className="block text-xl font-extrabold tracking-[-0.03em] text-[#fff9ec]">{route.city}</span>
+                        <span className="mt-1 block text-[11px] leading-4 text-[#e0ebe2]">{route.detail}</span>
+                      </span>
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#b7f21d] text-[#06284a]">
+                        <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </span>
+                    </span>
+                  </button>
               ))}
             </div>
           </div>
