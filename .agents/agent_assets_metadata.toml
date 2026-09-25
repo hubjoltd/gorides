@@ -14,3 +14,17 @@ mtime_ms = 1790336402642
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:2e64eb0f-8d8a-41a8-a3ed-f52c1e8ce2a0/483e5b24-4593-49c6-92e4-3f8f716df0f8/f235d817-a95e-4b88-9f57-421b8ae43fac"
 storage_version_token = "1790336413302425"
 content_type = "application/octet-stream"
+
+[[outputs]]
+id = "1GBc4p1NspYLlungTDuBV"
+uri = "file://gorides-india-cpanel-fixed.zip"
+type = "unspecified"
+title = "Fixed GoRides India cPanel package"
+description = "Replacement production package that fixes the blank page caused by the relative cPanel base path."
+logical_id = "4ab76abc-2af2-4a34-a618-de20b9e01e8b"
+content_hash = "sha256:b8845723f31eb7596485a973fc049b21c6538737e50a41de8854da52ec6a084f"
+size = 6274185
+mtime_ms = 1790337812528
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:2e64eb0f-8d8a-41a8-a3ed-f52c1e8ce2a0/4ab76abc-2af2-4a34-a618-de20b9e01e8b/11945d31-7589-4203-be77-9b03eb9067c6"
+storage_version_token = "1790337820069943"
+content_type = "application/octet-stream"

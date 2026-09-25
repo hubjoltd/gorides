@@ -50,6 +50,10 @@ const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 82170 26324';
 const PHONE_LINK = '918217026324';
 const EMAIL = 'Goridesindia@gmail.com';
+const ROUTER_BASE =
+  import.meta.env.BASE_URL === './'
+    ? ''
+    : import.meta.env.BASE_URL.replace(/\/$/, '');
 
 type Enquiry = {
   name: string;
@@ -604,7 +608,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+        <WouterRouter base={ROUTER_BASE}>
           <Router />
         </WouterRouter>
         <Toaster />
