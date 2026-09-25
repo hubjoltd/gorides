@@ -41,7 +41,7 @@ import outstationImage from '@assets/IMG_20260925_140705_1790325492691.png';
 const queryClient = new QueryClient();
 const PHONE_DISPLAY = '+91 82170 26324';
 const PHONE_LINK = '918217026324';
-const EMAIL = 'hello@goridesindia.in';
+const EMAIL = 'Goridesindia@gmail.com';
 
 type Enquiry = {
   name: string;
