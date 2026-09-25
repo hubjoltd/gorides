@@ -28,7 +28,7 @@ import {
 import NotFound from '@/pages/not-found';
 import { Route as WouterRoute, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import referenceImage from '@assets/IMG-20260911-WA0020_1789883818122.jpg';
-import sliderBackground from '@assets/132d4583-83ce-450e-827e-1966b44775e7_1790324736364.png';
+import sliderBackground from '@assets/132d4583-83ce-450e-827e-1966b44775e7_1790325260070.png';
 import logoImage from '@assets/IMG-20260912-WA0004_1789884191965.jpg';
 import goaImage from '@assets/Goa_1790325032169.jpg';
 import hampiImage from '@assets/Hampi_1790325032248.jpg';
@@ -219,7 +219,11 @@ function Home() {
       </header>
 
       <main>
-        <section className="relative bg-[#f7f3ea] px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44">
+        <section
+          className="relative isolate overflow-hidden bg-[#f7f3ea] bg-cover bg-center px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40 lg:pb-28 lg:pt-44"
+          style={{ backgroundImage: `url(${sliderBackground})`, backgroundPosition: 'center 54%' }}
+        >
+          <div className="absolute inset-0" aria-hidden="true" style={{ background: 'linear-gradient(90deg, rgba(247,243,234,.98) 0%, rgba(247,243,234,.9) 38%, rgba(247,243,234,.5) 70%, rgba(247,243,234,.16) 100%), linear-gradient(0deg, rgba(247,243,234,.55), rgba(247,243,234,.12))' }} />
           <div className="absolute -right-44 top-20 h-[480px] w-[480px] rounded-full bg-[#e4ede2] blur-3xl" />
           <div className="mx-auto grid min-w-0 max-w-[1240px] items-center gap-14 lg:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] lg:gap-20">
             <div className="relative z-10 min-w-0">
